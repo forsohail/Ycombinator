@@ -34,23 +34,21 @@ public class CompanyAndFounderDetails {
 
 		Actions a = new Actions(driver);
 		try {
-			//Scroll until all companies are loaded.
-			while (loadMoreCompany.isDisplayed()){
-					a.moveToElement(loadMoreCompany).build().perform();
-				}
+			// Scroll until all companies are loaded.
+			while (loadMoreCompany.isDisplayed()) {
+				a.moveToElement(loadMoreCompany).build().perform();
+			}
 		} catch (Exception stException) {
 
 		}
-		
+
 		int companyNumber = driver.findElements(By.xpath(
 				"//div[@class ='styles-module__rightCol___2NKRr']//a[@class='styles-module__company___1UVnl no-hovercard']"))
 				.size();
 		System.out.println("Number of Companies are " + companyNumber);
-		
 
 		List<WebElement> companyList = driver.findElements(By.xpath(
 				"//div[@class ='styles-module__rightCol___2NKRr']//a[@class='styles-module__company___1UVnl no-hovercard']"));
-		
 
 		for (WebElement cl : companyList) {
 			String parent = driver.getWindowHandle();
@@ -59,22 +57,24 @@ public class CompanyAndFounderDetails {
 			// Now iterate using Iterator
 			Iterator<String> I = windowList.iterator();
 			while (I.hasNext()) {
-				String child_Window = I.next();
-				if (!parent.equals(child_Window)) {
-					driver.switchTo().window(child_Window);
-					
-					System.out.println("Comapany URL: "+driver.getCurrentUrl());
+				String company_Window = I.next();
+				if (!parent.equals(company_Window)) {
+					driver.switchTo().window(company_Window);
+					String companyURL = driver
+							.findElement(By.xpath("//div[@class ='flex flex-row items-center leading-none px-3'] /a"))
+							.getText();
+					System.out.println("Comapany URL: " + companyURL);
 					List<WebElement> founderLink = driver.findElements(By.xpath(
 							"//div[contains(@class,'mt')]//a[contains(@class,'inline-block w-5 h-5 bg-contain')]"));
 					for (WebElement fl : founderLink) {
-						System.out.println("Founder Social Media Link: "+fl.getAttribute("href"));
+						System.out.println("Founder Social Media Link: " + fl.getAttribute("href"));
 					}
 					System.out.println("**************************");
-					//Close child  window
+					//close company window
 					driver.close();
 				}
 			}
-			// switch to the parent window
+			//switch to the parent window
 			driver.switchTo().window(parent);
 
 		}
