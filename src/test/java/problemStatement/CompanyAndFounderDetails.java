@@ -42,13 +42,14 @@ public class CompanyAndFounderDetails {
 
 		}
 
+		
 		int companyNumber = driver.findElements(By.xpath(
-				"//div[@class ='styles-module__rightCol___2NKRr']//a[@class='styles-module__company___1UVnl no-hovercard']"))
+				"//span[@class='styles-module__coName___3zz21']"))
 				.size();
 		System.out.println("Number of Companies are " + companyNumber);
 
 		List<WebElement> companyList = driver.findElements(By.xpath(
-				"//div[@class ='styles-module__rightCol___2NKRr']//a[@class='styles-module__company___1UVnl no-hovercard']"));
+				"//span[@class='styles-module__coName___3zz21']"));
 
 		for (WebElement cl : companyList) {
 			String parent = driver.getWindowHandle();
